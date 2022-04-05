@@ -11,20 +11,46 @@ import {
   Date,
 } from './styles';
 
-export function TransactionCard(){
+interface Category {
+  name: string;
+  icon: string;
+}
+
+export interface TransactionCardProps {
+  type: 'positive' | 'negative';
+  title: string;
+  amount: string;
+  category: Category;
+  date: string;
+}
+
+interface Props {
+  data: TransactionCardProps;
+}
+
+export function TransactionCard({ data } : Props){
   return(
     <Container>
-      <Title>Desenvolvimento de site</Title>
+      <Title>
+        {data.title}
+      </Title>
 
-      <Amount>R$ 12.000,00</Amount>
+      <Amount type={data.type}>
+        { data.type === 'negative' && '- ' }
+        { data.amount }
+      </Amount>
 
       <Footer>
         <Category>
-          <Icon name="dollar-sign" />
-          <CategoryName>Vendas</CategoryName>
+          <Icon name={data.category.icon} />
+          <CategoryName>
+            {data.category.name}
+          </CategoryName>
         </Category>
 
-        <Date>13/02/2022</Date>
+        <Date>
+          {data.date}
+        </Date>
 
       </Footer>
     </Container>
