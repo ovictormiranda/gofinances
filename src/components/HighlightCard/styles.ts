@@ -14,7 +14,7 @@ export const Container = styled.View<TypeProps>`
   border-radius: 5px;
 
   padding: 19px 23px;
-  padding-bottom: ${RFValue(42)}px;
+  padding-bottom: ${RFValue(20)}px;
   margin-right: 16px;
 `;
 
@@ -55,7 +55,7 @@ export const Amount = styled.Text<TypeProps>`
 
   color: ${({ theme, type }) =>
   type === 'total' ? theme.colors.shape : theme.colors.text_dark};
-  margin-top: 38px;
+  margin-top: 28px;
 `;
 
 export const LastTransaction = styled.Text<TypeProps>`
