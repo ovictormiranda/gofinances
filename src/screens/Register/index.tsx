@@ -26,8 +26,8 @@ import {
 } from './styles';
 
 interface FormData {
-  name: string;
-  amount: string;
+  [name: string]: any;
+  //amount: string;
 }
 
 const schema = Yup.object().shape({
@@ -77,7 +77,7 @@ export function Register(){
 
     if(category.key === 'category')
       return Alert.alert('Selecione a categoria')
-
+    ;
 
     const data = {
       name: form.name,

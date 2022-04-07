@@ -16,7 +16,8 @@ import {
   HighlightCards,
   Transactions,
   Title,
-  TransactionList
+  TransactionList,
+  LogoutButton,
 } from './styles';
 
 export interface DataListProps extends TransactionCardProps {
@@ -74,13 +75,15 @@ export function Dashboard(){
       <Header>
         <UserWrapper>
           <UserInfo>
-            <Photo source={{ uri: 'https://media-assets.wired.it/photos/615d95dfd8b66b13086cf465/16:9/w_1280,c_limit/Tony-Stark.png'}}/>
+            <Photo source={{ uri: 'https://www.manners.nl/wp-content/uploads/2019/10/ANP-52108873.jpg'}}/>
             <User>
               <UserGreeting>Olá,</UserGreeting>
               <Username>Miranda</Username>
             </User>
           </UserInfo>
-          <Icon name="power"/>
+          <LogoutButton onPress={() => {}}>
+           <Icon name="power"/>
+          </LogoutButton>
         </UserWrapper>
       </Header>
 
