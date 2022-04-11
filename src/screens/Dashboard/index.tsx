@@ -158,10 +158,10 @@ export function Dashboard(){
           <Header>
             <UserWrapper>
               <UserInfo>
-                <Photo source={{ uri: 'https://www.manners.nl/wp-content/uploads/2019/10/ANP-52108873.jpg'}}/>
+                <Photo source={{ uri: 'https://t3.ftcdn.net/jpg/03/13/23/76/360_F_313237633_0thdqc4pwnBsjDbFw6rxV8b8fIh6ncPd.jpg'}}/>
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <Username>Miranda</Username>
+                  <Username>Convidado (a)</Username>
                 </User>
               </UserInfo>
               <LogoutButton onPress={() => {}}>
