@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
-import { Alert } from "react-native";
+import React, { useContext, useState } from "react";
+import { ActivityIndicator, Alert } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { useTheme } from "styled-components";
 
 import AppleSvg from '../../assets/apple.svg';
 import GoogleSvg from '../../assets/google.svg';
@@ -21,27 +22,41 @@ import {
 } from './styles';
 
 export function SignIn() {
-  const { /* user, */ googleSignIn, appleSignIn } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { googleSignIn, appleSignIn } = useAuth();
+  const theme = useTheme();
 
   async function handleGoogleSignIn(){
     try {
-      await googleSignIn();
+      setIsLoading(true);
+      return await googleSignIn();
+      //using return just to fixe a warning of react performance, cause it was changing
+      // the screen before to update the setIsLoading(false) on Finally
 
     } catch (error) {
       console.log(error);
       Alert.alert("Não foi possível conectar a conta Google.")
+    } finally {
+      setIsLoading(false);
     }
   }
 
   async function handleAppleSignIn(){
     try {
-      await appleSignIn();
+      setIsLoading(true);
+      return await appleSignIn();
+      //using return just to fixe a warning of react performance, cause it was changing
+      // the screen before to update the setIsLoading(false) on Finally
 
     } catch (error) {
       console.log(error);
       Alert.alert("Não foi possível conectar a conta Apple.")
+    } finally {
+      setIsLoading(false);
     }
   }
+
   return (
     <Container>
       <Header>
@@ -76,6 +91,12 @@ export function SignIn() {
             onPress={handleAppleSignIn}
           />
         </FooterWrapper>
+
+        { isLoading &&
+          <ActivityIndicator
+            color={theme.colors.shape}
+            style={{ marginTop: 18 }}
+          />}
       </Footer>
     </Container>
   );
