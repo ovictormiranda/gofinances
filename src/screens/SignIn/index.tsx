@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { ActivityIndicator, Alert } from "react-native";
+import { ActivityIndicator, Alert, Platform } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useTheme } from "styled-components";
 
@@ -31,13 +31,10 @@ export function SignIn() {
     try {
       setIsLoading(true);
       return await googleSignIn();
-      //using return just to fixe a warning of react performance, cause it was changing
-      // the screen before to update the setIsLoading(false) on Finally
 
     } catch (error) {
       console.log(error);
-      Alert.alert("Não foi possível conectar a conta Google.")
-    } finally {
+      Alert.alert("Não foi possível conectar a conta Google.");
       setIsLoading(false);
     }
   }
@@ -46,13 +43,10 @@ export function SignIn() {
     try {
       setIsLoading(true);
       return await appleSignIn();
-      //using return just to fixe a warning of react performance, cause it was changing
-      // the screen before to update the setIsLoading(false) on Finally
 
     } catch (error) {
       console.log(error);
-      Alert.alert("Não foi possível conectar a conta Apple.")
-    } finally {
+      Alert.alert("Não foi possível conectar a conta Apple.");
       setIsLoading(false);
     }
   }
@@ -85,11 +79,14 @@ export function SignIn() {
             svg={GoogleSvg}
             onPress={handleGoogleSignIn}
           />
-          <SignInSocialButton
-            title= "Entrar com Apple"
-            svg={AppleSvg}
-            onPress={handleAppleSignIn}
-          />
+          {
+            Platform.OS === 'ios' &&
+            <SignInSocialButton
+              title= "Entrar com Apple"
+              svg={AppleSvg}
+              onPress={handleAppleSignIn}
+            />
+          }
         </FooterWrapper>
 
         { isLoading &&

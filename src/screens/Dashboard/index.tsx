@@ -52,7 +52,7 @@ export function Dashboard(){
   const { signOut, user } = useAuth();
 
   async function loadTransactions(){
-    const dataKey = '@gofinances:transactions';
+    const dataKey = `@gofinances:transactions_user:${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
     const transactions = response ? JSON.parse(response) : [];
 
@@ -95,9 +95,14 @@ export function Dashboard(){
       type: 'positive' | 'negative'
     ){
 
+      const collectionFiltered = collection
+      .filter(transaction => transaction.type === type);
+
+      if(collectionFiltered.length === 0)
+        return 0;
+
       const lastTransaction = new Date(
-      Math.max.apply(Math, collection
-      .filter(transaction => transaction.type === type)
+      Math.max.apply(Math, collectionFiltered
       .map(transaction => new Date(transaction.date).getTime())));
 
       return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', { month: 'long'})}`;
@@ -108,7 +113,10 @@ export function Dashboard(){
 
     const lastTransactionEntries = getLastTransactionDate(transactions, 'positive');
     const lastTransactionCosts = getLastTransactionDate(transactions, 'negative');
-    const totalInterval = `01 a ${lastTransactionCosts}`;
+
+    const totalInterval = lastTransactionCosts === 0
+    ? 'Não há transações'
+    : `01 a ${lastTransactionCosts}`;
 
     const balance = entriesTotal - costsTotal;
 
@@ -118,14 +126,18 @@ export function Dashboard(){
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: `Última entrada dia ${lastTransactionEntries}`,
+        lastTransaction: lastTransactionEntries === 0
+        ? 'Não há transações'
+        : `Última entrada dia ${lastTransactionEntries}`,
       },
       costs: {
         total: costsTotal.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: `Última saída dia ${lastTransactionCosts}`,
+        lastTransaction: lastTransactionCosts === 0
+        ? 'Não há transações'
+        :`Última saída dia ${lastTransactionCosts}`,
       },
       balance: {
         total: balance.toLocaleString('pt-BR', {
