@@ -2,6 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import  AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { addMonths, subMonths, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale'
+
 import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from 'styled-components';
 import { useAuth } from '../../hooks/auth';
@@ -24,7 +27,11 @@ import {
   Title,
   TransactionList,
   LogoutButton,
-  LoadContainer
+  LoadContainer,
+  MonthSelect,
+  MonthSelectButton,
+  MonthSelectIcon,
+  Month,
 } from './styles';
 
 export interface DataListProps extends TransactionCardProps {
@@ -46,10 +53,19 @@ export function Dashboard(){
   const [isLoading, setIsLoading] = useState(true);
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const theme = useTheme();
 
   const { signOut, user } = useAuth();
+
+  function handleDateChange(action: 'next' | 'prev'){
+    if(action === 'next'){
+      setSelectedDate(addMonths(selectedDate, 1));
+    } else {
+      setSelectedDate(subMonths(selectedDate, 1))
+    }
+  }
 
   async function loadTransactions(){
     const dataKey = `@gofinances:transactions_user:${user.id}`;
@@ -60,6 +76,10 @@ export function Dashboard(){
     let costsTotal = 0;
 
     const transactionsFormatted: DataListProps[] = transactions
+    .filter((item: DataListProps) =>
+      new Date(item.date).getMonth() === selectedDate.getMonth() &&
+      new Date(item.date).getFullYear() === selectedDate.getFullYear()
+    )
     .map((item: DataListProps) => {
 
       if(item.type === 'positive'){
@@ -107,7 +127,6 @@ export function Dashboard(){
 
       return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', { month: 'long'})}`;
     }
-
 
     setTransactions(transactionsFormatted);
 
@@ -157,7 +176,7 @@ export function Dashboard(){
 
   useFocusEffect(useCallback(() => {
     loadTransactions();
-  },[]));
+  },[selectedDate]));
 
   return (
     <Container>
@@ -207,8 +226,22 @@ export function Dashboard(){
 
           </HighlightCards>
 
+          <Title>Histórico do mês de</Title>
+
           <Transactions>
-            <Title>Listagem</Title>
+            <MonthSelect>
+            <MonthSelectButton onPress={() => handleDateChange('prev')}>
+              <MonthSelectIcon name="chevron-left"/>
+            </MonthSelectButton>
+
+            <Month>
+              { format(selectedDate, 'MMMM, yyyy', {locale: ptBR}) }
+            </Month>
+
+            <MonthSelectButton onPress={() => handleDateChange('next')}>
+              <MonthSelectIcon name="chevron-right"/>
+            </MonthSelectButton>
+          </MonthSelect>
 
             <TransactionList
               data={transactions}
