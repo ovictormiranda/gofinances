@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
 import  AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { addMonths, subMonths, format } from 'date-fns';
@@ -59,12 +59,35 @@ export function Dashboard(){
 
   const { signOut, user } = useAuth();
 
-  function handleDateChange(action: 'next' | 'prev'){
+  async function handleDateChange(action: 'next' | 'prev'){
     if(action === 'next'){
       setSelectedDate(addMonths(selectedDate, 1));
     } else {
       setSelectedDate(subMonths(selectedDate, 1))
     }
+  }
+
+  async function deletingTransaction(id: string){
+    try {
+      await AsyncStorage.removeItem(id);
+      return true;
+    } catch(exception) {
+      return false;
+    }
+  }
+
+  function handleDeleteTransaction(id: string) {
+    Alert.alert('Deletar transação', `Tem certeza que você deseja deletar essa transação ${id}?`, [
+      {
+        style: 'cancel',
+        text: 'Não'
+      },
+      {
+        style: 'destructive',
+        text: 'sim',
+        onPress: () => {deletingTransaction(id)}
+      }
+    ])
   }
 
   async function loadTransactions(){
@@ -199,7 +222,7 @@ export function Dashboard(){
                 </User>
               </UserInfo>
               <LogoutButton onPress={signOut}>
-              <Icon name="power"/>
+                <Icon name="power"/>
               </LogoutButton>
             </UserWrapper>
           </Header>
@@ -246,8 +269,14 @@ export function Dashboard(){
             <TransactionList
               data={transactions}
               keyExtractor={item => item.id}
-              renderItem={({ item }) => <TransactionCard data={item} />}
+              renderItem={({ item }) =>
+              <TransactionCard
+                  data={item}
+                  deleteTransaction={handleDeleteTransaction}
+              />
+            }
             />
+
           </Transactions>
         </>
       }

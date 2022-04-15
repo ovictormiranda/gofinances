@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 interface TransactionProps {
   type: 'positive' | 'negative'
@@ -57,4 +58,22 @@ export const CategoryName = styled.Text`
 export const Date = styled.Text`
   font-size: ${RFValue(14)}px;
   color: ${({ theme }) => theme.colors.text};
+`;
+
+export const DeleteTransactionSwipe = styled.View`
+  background-color: ${({ theme }) => theme.colors.attention};
+
+  margin-bottom: 16px;
+  padding: 0px 25px;
+  border-radius: 8px;
+
+  justify-content: center;
+  align-items: flex-end;
+`;
+
+export const ButtonDelete = styled(BorderlessButton)``;
+
+export const IconDelete = styled(Feather)`
+  font-size: ${RFValue(20)}px;
+  color: ${({ theme }) => theme.colors.shape};
 `;
