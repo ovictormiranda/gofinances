@@ -68,25 +68,52 @@ export function Dashboard(){
   }
 
   async function deletingTransaction(id: string){
-    try {
-      await AsyncStorage.removeItem(id);
+
+/*   const dataKey = await AsyncStorage.getItem(`@gofinances:transactions`)
+
+  const newItem = dataKey ? JSON.parse(dataKey) : [];
+
+  var newItem2 = newItem ? newItem.map((i) => i.id !== id): console.log("deu ruim"); */
+
+/*   const dataKey = `@gofinances:transactions_user:${user.id}`;
+
+  const data = await AsyncStorage.getItem(dataKey);
+  const currentData = data ? JSON.parse(data) : [];
+*/
+
+
+ // await AsyncStorage.setItem(dataKey!, JSON.stringify(newItem2));
+  //setTransactions(newItem2)
+
+/*    const keys = await AsyncStorage.getAllKeys()
+   console.log(keys)
+   console.log(id)
+
+   console.log(newItem)
+   console.log("aqui em baixo")
+   console.log(dataKey)
+   console.log("tcharam")
+   console.log(newItem2) */
+
+/*      try {
+      await AsyncStorage.removeItem(`@gofinances:transactions_user:${user.id}`,);
       return true;
     } catch(exception) {
       return false;
-    }
+    } */
   }
 
   function handleDeleteTransaction(id: string) {
-    Alert.alert('Deletar transação', `Tem certeza que você deseja deletar essa transação ${id}?`, [
+    Alert.alert('Deletar transação', 'Essa função ainda não está disponível' /* ${id}? */, [
       {
         style: 'cancel',
-        text: 'Não'
+        text: 'Entendi'
       },
-      {
+/*       {
         style: 'destructive',
         text: 'sim',
         onPress: () => {deletingTransaction(id)}
-      }
+      } */
     ])
   }
 
@@ -151,6 +178,7 @@ export function Dashboard(){
       return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', { month: 'long'})}`;
     }
 
+    console.log(transactionsFormatted)
     setTransactions(transactionsFormatted);
 
     const lastTransactionEntries = getLastTransactionDate(transactions, 'positive');
@@ -283,3 +311,11 @@ export function Dashboard(){
     </Container>
   )
 }
+function reset() {
+  throw new Error('Function not implemented.');
+}
+
+function setTransactionType(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

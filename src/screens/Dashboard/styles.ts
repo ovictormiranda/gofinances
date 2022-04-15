@@ -91,7 +91,7 @@ export const Transactions = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${RFValue(18)}px;
+  font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 
   margin-top: 54px;
