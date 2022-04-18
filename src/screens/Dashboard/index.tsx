@@ -69,21 +69,21 @@ export function Dashboard(){
 
   async function deletingTransaction(id: string){
 
-/*   const dataKey = await AsyncStorage.getItem(`@gofinances:transactions`)
+   const dataKey = await AsyncStorage.getItem(`@gofinances:transactions_user:${user.id}`)
 
-  const newItem = dataKey ? JSON.parse(dataKey) : [];
+    const newItem = dataKey ? JSON.parse(dataKey) : [];
 
-  var newItem2 = newItem ? newItem.map((i) => i.id !== id): console.log("deu ruim"); */
+    var newItem2 = newItem ? newItem.filter((i) => i.id !== id): console.log("deu ruim");
 
-/*   const dataKey = `@gofinances:transactions_user:${user.id}`;
+    /*   const dataKey = `@gofinances:transactions_user:${user.id}`;
 
-  const data = await AsyncStorage.getItem(dataKey);
-  const currentData = data ? JSON.parse(data) : [];
-*/
+      const data = await AsyncStorage.getItem(dataKey);
+      const currentData = data ? JSON.parse(data) : [];
+    */
 
 
- // await AsyncStorage.setItem(dataKey!, JSON.stringify(newItem2));
-  //setTransactions(newItem2)
+    await AsyncStorage.setItem(dataKey!, JSON.stringify(newItem2));
+    setTransactions(newItem2)
 
 /*    const keys = await AsyncStorage.getAllKeys()
    console.log(keys)
@@ -95,7 +95,7 @@ export function Dashboard(){
    console.log("tcharam")
    console.log(newItem2) */
 
-/*      try {
+    /*      try {
       await AsyncStorage.removeItem(`@gofinances:transactions_user:${user.id}`,);
       return true;
     } catch(exception) {
@@ -104,12 +104,12 @@ export function Dashboard(){
   }
 
   function handleDeleteTransaction(id: string) {
-    Alert.alert('Deletar transação', 'Essa função ainda não está disponível' /* ${id}? */, [
+    Alert.alert('Deletar transação', `Essa função ainda não está disponível ${id}?`, [
       {
         style: 'cancel',
         text: 'Entendi'
       },
-/*       {
+      /* {
         style: 'destructive',
         text: 'sim',
         onPress: () => {deletingTransaction(id)}
@@ -311,11 +311,3 @@ export function Dashboard(){
     </Container>
   )
 }
-function reset() {
-  throw new Error('Function not implemented.');
-}
-
-function setTransactionType(arg0: string) {
-  throw new Error('Function not implemented.');
-}
-

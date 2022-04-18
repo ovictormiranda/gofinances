@@ -13,7 +13,7 @@
     ],
     "description": "",
     "ios": {
-      "bundleIdentifier": "com.gofinances",
+      "bundleIdentifier": "com.gofinances.app",
       "buildNumber": "1.0.0"
     },
     "android": {
