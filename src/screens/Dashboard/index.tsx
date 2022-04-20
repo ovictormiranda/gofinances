@@ -68,52 +68,33 @@ export function Dashboard(){
   }
 
   async function deletingTransaction(id: string){
+    try {
+      const dataKey = `@gofinances:transactions_user:${user.id}`;
 
-   const dataKey = await AsyncStorage.getItem(`@gofinances:transactions_user:${user.id}`)
+      const loadedTransactions = await AsyncStorage.getItem(dataKey);
+      const transactions = loadedTransactions ? JSON.parse(loadedTransactions) : [];
+      const newTransactions = transactions.filter(transaction => transaction.id !== id);
 
-    const newItem = dataKey ? JSON.parse(dataKey) : [];
-
-    var newItem2 = newItem ? newItem.filter((i) => i.id !== id): console.log("deu ruim");
-
-    /*   const dataKey = `@gofinances:transactions_user:${user.id}`;
-
-      const data = await AsyncStorage.getItem(dataKey);
-      const currentData = data ? JSON.parse(data) : [];
-    */
-
-
-    await AsyncStorage.setItem(dataKey!, JSON.stringify(newItem2));
-    setTransactions(newItem2)
-
-/*    const keys = await AsyncStorage.getAllKeys()
-   console.log(keys)
-   console.log(id)
-
-   console.log(newItem)
-   console.log("aqui em baixo")
-   console.log(dataKey)
-   console.log("tcharam")
-   console.log(newItem2) */
-
-    /*      try {
-      await AsyncStorage.removeItem(`@gofinances:transactions_user:${user.id}`,);
-      return true;
-    } catch(exception) {
-      return false;
-    } */
+      await AsyncStorage.setItem(dataKey, JSON.stringify(newTransactions));
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Não foi possível excluir este item, tente novamente mais tarde.");
+    } finally {
+      loadTransactions();
+    }
   }
 
   function handleDeleteTransaction(id: string) {
-    Alert.alert('Deletar transação', `Essa função ainda não está disponível ${id}?`, [
+    Alert.alert('Deletar transação', `Deseja excluir esta transação?`, [
       {
         style: 'cancel',
-        text: 'Entendi'
+        text: 'não'
       },
-      /* {
+      {
         style: 'destructive',
         text: 'sim',
         onPress: () => {deletingTransaction(id)}
-      } */
+      }
     ])
   }
 
