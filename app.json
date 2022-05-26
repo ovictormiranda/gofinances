@@ -5,7 +5,7 @@
   "expo": {
     "name": "gofinances",
     "slug": "gofinances",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "scheme": "gofinances",
     "icon": "./assets/logo.png",
     "assetBundlePatterns": [
