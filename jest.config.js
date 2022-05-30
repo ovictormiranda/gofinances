@@ -10,5 +10,8 @@ module.exports = {
     ],
     setupFilesAfterEnv: [
       "jest-styled-components"
-    ]
+    ],
+    setupFiles: [
+      "./jestSetupFile.js"
+    ],
 }
