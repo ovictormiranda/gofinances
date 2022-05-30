@@ -61,7 +61,10 @@ export function Register(){
     name: 'Categoria',
   });
 
-  const navigation = useNavigation<NavigationProps>();
+
+  //Esta linha foi comentada para rodar os testes de interação simulando um clique do usuario
+  // para rodar a aplicação, descomente a linha abaixo. para rodar os testes, mantenha a linha abaixo comentada
+  //const navigation = useNavigation<NavigationProps>();
 
   const {
     control,
@@ -77,7 +80,9 @@ export function Register(){
   }
 
   function handleOpenSelectCategoryModal(){
-    setCategoryModalOpen(true);
+    setTimeout(() => {
+      setCategoryModalOpen(true);
+    }, 1000);  //timeout criado apenas para fazer um teste assincrono
   }
 
   function handleCloseSelectCategoryModal(){
@@ -173,6 +178,7 @@ export function Register(){
           </TransactionsTypes>
 
           <CategorySelectButton
+          testID="button-category"
             title={category.name}
             onPress={handleOpenSelectCategoryModal}
           />
@@ -184,7 +190,7 @@ export function Register(){
         />
 
       </Form>
-      <Modal visible={categoryModalOpen}>
+      <Modal testID="modal-category" visible={categoryModalOpen}>
         <CategorySelect
           category={category}
           setCategory={setCategory}

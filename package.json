@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "test:w": "yarn test --watchAll"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.0",
@@ -45,7 +46,6 @@
     "react-native-unimodules": "~0.14.5",
     "react-native-uuid": "^2.0.1",
     "react-native-web": "~0.13.12",
-    "react-test-renderer": "16.14.0",
     "styled-components": "^5.3.1",
     "victory-native": "^35.5.5",
     "yup": "^0.32.9"
@@ -59,7 +59,7 @@
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "@types/styled-components-react-native": "^5.1.1",
-    "jest-expo": "^43.0.0",
+    "jest-expo": "^42",
     "jest-fetch-mock": "^3.0.3",
     "jest-styled-components": "^7.0.5",
     "ts-jest": "^27.0.7",

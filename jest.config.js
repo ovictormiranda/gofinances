@@ -14,4 +14,13 @@ module.exports = {
     setupFiles: [
       "./jestSetupFile.js"
     ],
+
+    collectCoverage: true,
+    collectCoverageFrom: [
+      "src/**/*.tsx",
+      "!src/**/*.spec.tsx"
+    ],
+    coverageReporters: [
+      "lcov"
+    ]
 }

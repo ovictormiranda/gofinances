@@ -61,4 +61,17 @@ describe('Auth Hook', () => {
 
     expect(result.current.user).not.toHaveProperty('id');
   });
-})
+
+  it("Shouldn't connect if press to canceling the authentication with Google account", async () => {
+    const { result, waitForNextUpdate } = renderHook(() => useAuth(), {
+      wrapper: AuthProvider
+    });
+
+    try{
+      act(async () => await result.current.googleSignIn());
+      await waitForNextUpdate();
+    } catch {
+      expect(result.current.user).toThrowError();
+    }
+  });
+});
